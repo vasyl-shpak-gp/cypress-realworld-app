@@ -1,16 +1,21 @@
 import { User } from "../../../src/models";
 import { isMobile } from "../../support/utils";
 
+// apiURL = http://localhost:3001
 const apiGraphQL = `${Cypress.env("apiUrl")}/graphql`;
 
 describe("User Sign-up and Login", function () {
   beforeEach(function () {
     cy.task("db:seed");
-
+    //pw using async wont require alias
     cy.intercept("POST", "/users").as("signup");
+    // allows to mock the response related to user sign-up
+    //so test proceed without actually creating new users in the database
+
     cy.intercept("POST", apiGraphQL, (req) => {
       const { body } = req;
 
+      //mock response so we actually not creating user
       if (body.hasOwnProperty("operationName") && body.operationName === "CreateBankAccount") {
         req.alias = "gqlCreateBankAccountMutation";
       }
