@@ -6,11 +6,12 @@ const apiGraphQL = `${Cypress.env("apiUrl")}/graphql`;
 describe("User Sign-up and Login", function () {
   beforeEach(function () {
     cy.task("db:seed");
-
+    // is pw using async wont require alias???
     cy.intercept("POST", "/users").as("signup");
+    // allows to mock the response related to user sign-up
+
     cy.intercept("POST", apiGraphQL, (req) => {
       const { body } = req;
-
       if (body.hasOwnProperty("operationName") && body.operationName === "CreateBankAccount") {
         req.alias = "gqlCreateBankAccountMutation";
       }

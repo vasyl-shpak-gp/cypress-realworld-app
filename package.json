@@ -55,8 +55,10 @@
     "@cypress/instrument-cra": "1.4.0",
     "@cypress/vite-dev-server": "^5.0.7",
     "@faker-js/faker": "6.1.2",
-    "@percy/cli": "^1.27.4",
+    "@percy/cli": "^1.28.2",
     "@percy/cypress": "3.1.2",
+    "@percy/playwright": "^1.0.5",
+    "@playwright/test": "^1.43.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@types/bcryptjs": "2.4.2",
@@ -187,7 +189,9 @@
     "build": "vite build",
     "codesandbox:start:api": "yarn tsnode:not-instrumented --files backend/app.ts",
     "codesandbox:start": "NODE_ENV=development TSC_COMPILE_ON_ERROR=true concurrently \"vite\" yarn:start:api:codesandbox",
-    "postinstall": "husky install && patch-package"
+    "postinstall": "husky install && patch-package",
+    "playwright:test:percy": "percy exec -- yarn playwright test",
+    "playwright:test": "playwright test"
   },
   "engines": {
     "node": "^18.0.0 || >=20.0.0"
